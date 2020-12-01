@@ -1,0 +1,9 @@
+<view class="container">
+  <view wx:for="{{players}}" wx:for-item="item" wx:key="index">
+    <button 
+      class="userinfo-avatar"
+      style="background-image: url({{item.avatarUrl}})"
+      size="default"
+    ></button>
+  </view>
+</view>

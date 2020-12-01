@@ -55,5 +55,7 @@
     </navigator>
   </view>
 
-
+  <view>
+    <button type="default" bindtap="onCreateGame">创建房间</button>
+  </view>
 </view>

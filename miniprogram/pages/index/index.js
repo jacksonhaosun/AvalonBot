@@ -114,5 +114,24 @@ Page({
       }
     })
   },
-
+  onCreateGame: function() {
+    // 调用云函数
+    wx.cloud.callFunction({
+      name: 'createGame',
+      data: {creator: this.data.userInfo.nickName},
+      success: res => {
+        console.log('[云函数] [createGame]')
+        console.log(res.result)
+        wx.redirectTo({
+          url: '../game/game?zoomid=' + res.result,
+        })
+      },
+      fail: err => {
+        console.error('[云函数] [createGame] 调用失败', err)
+        wx.navigateTo({
+          url: '../deployFunctions/deployFunctions',
+        })
+      }
+    })
+  },
 })
