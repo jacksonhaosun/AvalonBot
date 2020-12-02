@@ -114,5 +114,65 @@ Page({
       }
     })
   },
+  onCreateGame: function() {
+    // 调用云函数
+    wx.cloud.callFunction({
+      name: 'createGame',
+      data: {creator: {
+        nickName: this.data.userInfo.nickName,
+        avatarUrl: this.data.userInfo.avatarUrl},
+        maxPlayer: 8},
+      success: res => {
+        console.log('[云函数] [createGame]')
+        console.log(res.result)
+        wx.redirectTo({
+          url: '../game/game?id=' + res.result,
+        })
+      },
+      fail: err => {
+        console.error('[云函数] [createGame] 调用失败', err)
+        wx.navigateTo({
+          url: '../deployFunctions/deployFunctions',
+        })
+      }
+    })
+  },
 
+  onJoinGame: function(e) {
+    wx.cloud.callFunction({
+      name: 'joinGame',
+      data: {
+        zoomid: e.detail.value.input,
+        player: {
+          nickName: this.data.userInfo.nickName,
+          avatarUrl: this.data.userInfo.avatarUrl
+        }
+      },
+      success: res => {
+        console.log('[云函数] [joinGame]')
+        if (res.result == 'does not exist') {
+          wx.showToast({
+            title: '房间不存在',
+            icon: 'none',
+            duration: 2000
+          })
+        } else if (res.result == 'full') {
+          wx.showToast({
+            title: '房间已满',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+          else {
+          console.log(res.result)
+          wx.redirectTo({
+            url: '../game/game?id=' + res.result,
+          })
+        }
+      },
+      fail: err => {
+        console.error('[云函数] [joinGame] 调用失败', err)
+      }
+    })
+  }
 })
