@@ -7,19 +7,37 @@ cloud.init({
 })
 const db = cloud.database()
 
+function genRandomNumber() {
+  return (Math.floor(100000 + Math.random() * 900000)).toString()
+}
+
+async function createNewGame(maxPlayer, creator) {
+  const roomid = genRandomNumber()
+  const { data } = await db.collection('room')
+    .where( { roomid })
+    .get()
+  if (data.length) {
+    return this.createNewGame(maxPlayer, creator)
+  }
+
+  let room = {
+    roomid,
+    maxPlayer: maxPlayer,
+    curPlayer: 1,
+    createTimestamp: Date.now().toString(),
+    players: [creator.nickName],
+    playerAvatars: [creator.avatarUrl]
+  }
+  return db.collection('room').add({
+    data: {
+      room
+    }
+    }).then(res => {
+      return res._id
+    })
+}
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
-  
-  const zooms = db.collection('zoom')
-  console.log(event.data)
-
-  return zooms.add({
-    data: {
-      zoomid: "123",
-      players: [event.creator],
-    }
-    }).then(res => {
-      return "123"
-    })
+  return createNewGame(event.maxPlayer, event.creator)
 }

@@ -1,4 +1,5 @@
 <view class="container">
+  <view>room {{roomid}}</view>
   <view wx:for="{{players}}" wx:for-item="item" wx:key="index">
     <button 
       class="userinfo-avatar"

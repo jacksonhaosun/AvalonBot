@@ -1,9 +1,11 @@
 const app = getApp()
+const db = wx.cloud.database()
 
 Page({
   data: {
     players: [],
-    zoomid: String,
+    docid: String,
+    roomid: String,
   },
 
   onLoad: function (query) {
@@ -15,24 +17,29 @@ Page({
     };
 
     this.setData({
-      zoomid: query.zoomid
+      docid: query.id
     })
-
-    const db = wx.cloud.database()
-    db.collection('zoom').where({
-      zoomid: this.data.zoomid
-    }).get({
-      success: function (res) {
-        console.log(res.data)
-      }
-    })
-    const watcher = db.collection('zoom')
+    console.log(this.data.docid)
+    db.collection('room')
       .where({
-        zoomid: this.data.zoomid
+        _id: this.data.docid
+      }).get().then(res => {
+        console.log(res)
+        this.setData({roomid: res.data[0].room.roomid})
+      })
+
+    const watcher = db.collection('room')
+      .where({
+        _id: this.data.docid
       })
       .watch({
-        onChange: function(snapshot) {
-          console.log('query result snapshot after the event', snapshot.docs)
+        onChange: snapshot => {
+          console.log(snapshot)
+          const { docs, docChanges } = snapshot
+          if(docChanges[0].dataType === 'update') {
+            console.log('query result snapshot after the event', docs)
+          }
+          
           // this.setData({
           //   players: [snapshot.docs]
           // })
