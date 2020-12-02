@@ -55,5 +55,16 @@
     </navigator>
   </view>
 
+  <view>
+    <button type="default" bindtap="onCreateGame">创建房间</button>
+  </view>
 
+  <form catchsubmit="onJoinGame">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__bd" style="margin: 30rpx 0" >
+        <input class="weui-input" name="input" placeholder="这是一个输入框" />
+      </view>
+    </view>
+    <button type="default" formType="submit">加入房间</button>
+  </form>
 </view>
