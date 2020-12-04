@@ -6,7 +6,12 @@
 </view>
   <view class="info-wrap">
     <block wx:for="{{players}}" wx:for-item="item" wx:key="index"> 
-    <view class="userinfo">
+      <view class="userinfo">
+      <image class="userinfo-avatar" src="player1.png"></image>
+      <text class="userinfo-nickname">Mocca</text>
+    </view>
+    </block>
+    <!-- <view class="userinfo">
       <image class="userinfo-avatar" src="player1.png"></image>
       <text class="userinfo-nickname">Mocca</text>
     </view>
@@ -17,7 +22,6 @@
     <view class="userinfo">
       <image class="userinfo-avatar" src="player1.png"></image>
       <text class="userinfo-nickname">Mocca</text>
-    </view>
-     </block> 
+    </view>  -->
   </view>
 

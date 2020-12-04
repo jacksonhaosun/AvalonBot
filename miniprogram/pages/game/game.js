@@ -4,8 +4,11 @@ const db = wx.cloud.database()
 Page({
   data: {
     players: [],
+    playerAvatars: [],
     docid: String,
     roomid: String,
+    canStartGame: false,
+    role: String,
   },
 
   onLoad: function (query) {
@@ -25,9 +28,21 @@ Page({
         _id: this.data.docid
       }).get().then(res => {
         console.log(res)
-        this.setData({roomid: res.data[0].room.roomid})
+        if (res.data[0].room.curPlayer == 1) {
+          this.setData({
+            roomid: res.data[0].room.roomid,
+            role: "owner",
+          })
+        }
+        else {
+          this.setData({
+            roomid: res.data[0].room.roomid,
+            role: "player",
+          })
+        }
       })
 
+    // Watcher for player joining game
     const watcher = db.collection('room')
       .where({
         _id: this.data.docid
@@ -36,17 +51,85 @@ Page({
         onChange: snapshot => {
           console.log(snapshot)
           const { docs, docChanges } = snapshot
-          if(docChanges[0].dataType === 'update') {
+          if (docChanges[0].dataType === 'update') {
             console.log('query result snapshot after the event', docs)
+
+            // watch for player joining
+            console.log(this.data.players);
+            if (docChanges[0].updatedFields && docChanges[0].updatedFields.room.curPlayer) {
+              if (docs[0].room.curPlayer === docs[0].room.maxPlayer && this.data.role === 'owner') {
+                this.setData({
+                  canStartGame: true,
+                  playerAvatars: docs[0].room.playerAvatars,
+                  players: docs[0].room.players,
+                })
+              }
+              else if (docs[0].room.curPlayer === docs[0].room.maxPlayer) {
+                
+                this.setData({
+                  playerAvatars: docs[0].room.playerAvatars,
+                  players: docs[0].room.players,
+                })
+              }
+            }
+
+            // watch for team vote
+            // TODO
+            if (docChanges[0].updatedFields && docChanges[0].updatedFields.room.teamvote) {
+              if (doc[0].room.teamvote.length === doc[0].room.maxPlayer) {
+                this.showTeamVoteResult(doc[0].room.teamvote)
+              }
+            }
           }
-          
-          // this.setData({
-          //   players: [snapshot.docs]
-          // })
         },
         onError: function(err) {
           console.error(err);
         }
       })
-  }
+      
+  },
+
+  startGame: function () {
+    wx.cloud.callFunction({
+      name: 'startGame',
+      data: {
+        roomid: this.data.roomid
+      },
+      success: res => {
+        console.log('[云函数] [startGame]')
+        console.log(res.result)
+      },
+      fail: err => {
+        console.error('[云函数] [startGame] 调用失败', err)
+      }
+    })
+  },
+
+  voteTeam: function () {
+    wx.cloud.callFunction({
+      name: 'voteTeam',
+      data: {
+        roomid: this.data.roomid,
+      },
+      success: res => {
+        console.log('[云函数] [voteTeam]')
+        console.log(res.result)
+      },
+      fail: err => {
+        console.error('[云函数] [voteTeam] 调用失败', err)
+      }
+    })
+  },
+
+  showTeamVoteResult: function(votes) {
+    let approve = 0
+    votes.forEach(vote => approve += vote)
+    let title = success > votes.length/2 ? '发车成功' : '发车失败'
+    let content = 'Approve: ' + approve + '\nReject: ' + votes.length - approve
+    wx.showModal({
+      title: title,
+      content: content,
+      showCancel: false
+    })
+  },
 })

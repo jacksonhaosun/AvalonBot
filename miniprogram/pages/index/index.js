@@ -142,7 +142,7 @@ Page({
     wx.cloud.callFunction({
       name: 'joinGame',
       data: {
-        zoomid: e.detail.value.input,
+        roomid: e.detail.value.input,
         player: {
           nickName: this.data.userInfo.nickName,
           avatarUrl: this.data.userInfo.avatarUrl
