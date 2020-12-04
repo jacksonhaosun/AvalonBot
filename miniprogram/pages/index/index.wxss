@@ -22,7 +22,7 @@ page {
 }
 
 .userinfo {
-  padding-left: 120rpx;
+  padding-left: 0rpx;
 }
 
 .userinfo-avatar {
@@ -150,4 +150,8 @@ page {
   font-size: 24rpx;
   line-height: 36rpx;
   word-break: break-all;
+}
+
+.center{
+  text-align: center;
 }
