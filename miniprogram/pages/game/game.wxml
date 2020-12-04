@@ -12,7 +12,7 @@
       </view>
     </block> -->
     <view class="userinfo">
-    <view wx:for="{{playerAvatars}}">
+    <view wx:for="{{playerAvatars}}" wx:key="*this">
       <view 
         class="userinfo-avatar"
         style="background-image: url({{item}})"
@@ -20,7 +20,7 @@
       ></view>
     </view>
 
-    <view wx:for="{{players}}">
+    <view wx:for="{{players}}" wx:key="*this">
       <text class="userinfo-nickname">{{item}}</text>
     </view>
     </view>

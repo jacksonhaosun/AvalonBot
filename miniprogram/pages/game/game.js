@@ -69,22 +69,6 @@ Page({
             console.log('query result snapshot after the event', docs)
 
             // watch for player joining
-<<<<<<< HEAD
-            console.log(this.data.players);
-            if (docChanges[0].updatedFields && docChanges[0].updatedFields.room.curPlayer) {
-              if (docs[0].room.curPlayer === docs[0].room.maxPlayer && this.data.role === 'owner') {
-                this.setData({
-                  canStartGame: true,
-                  playerAvatars: docs[0].room.playerAvatars,
-                  players: docs[0].room.players,
-                })
-              }
-              else if (docs[0].room.curPlayer === docs[0].room.maxPlayer) {
-                
-                this.setData({
-                  playerAvatars: docs[0].room.playerAvatars,
-                  players: docs[0].room.players,
-=======
             if (docChanges[0].updatedFields && docChanges[0].updatedFields['room.curPlayer']) {
               this.setData({
                 playerAvatars: docs[0].room.playerAvatars,
@@ -94,7 +78,6 @@ Page({
               if (docs[0].room.curPlayer === docs[0].room.maxPlayer && this.data.role === 'owner') {
                 this.setData({
                   canStartGame: true,
->>>>>>> HL-clean-codo-base
                 })
               }
             }
