@@ -12,22 +12,32 @@
       </view>
     </block> -->
     <view class="userinfo">
-    <view wx:for="{{playerAvatars}}" wx:key="*this">
+    <view wx:for="{{playerAvatars}}" wx:key="index">
       <view 
         class="userinfo-avatar"
         style="background-image: url({{item}})"
         size="default"
       ></view>
+      <text class="userinfo-nickname">{{players[index]}}</text>
     </view>
 
-    <view wx:for="{{players}}" wx:key="*this">
-      <text class="userinfo-nickname">{{item}}</text>
-    </view>
     </view>
   </view>
 
-  <form catchsubmit="voteTeam">
+  <form catchsubmit="startGame">
     <view class="weui-cell weui-cell_input">
     </view>
-    <button type="default" formType="submit">发车成功</button>
+    <button type="default" formType="submit">开始游戏</button>
+  </form>
+
+  <form catchsubmit="voteTeamApprove">
+    <view class="weui-cell weui-cell_input">
+    </view>
+    <button type="default" formType="submit">同意发车</button>
+  </form>
+
+  <form catchsubmit="voteTeamReject">
+    <view class="weui-cell weui-cell_input">
+    </view>
+    <button type="default" formType="submit">反对发车</button>
   </form>

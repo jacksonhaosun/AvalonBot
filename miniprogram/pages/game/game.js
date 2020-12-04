@@ -32,6 +32,7 @@ Page({
       }).get().then(res => {
         console.log(res)
         const index = res.data[0].room.players.indexOf(app.globalData.name)
+        console.log("name is " + app.globalData.name + " index " + index)
         if (res.data[0].room.curPlayer == 1) {
           this.setData({
             roomid: res.data[0].room.roomid,
@@ -85,7 +86,7 @@ Page({
             // watch for team vote
             // TODO
             if (docChanges[0].updatedFields && docChanges[0].updatedFields['room.teamvote']) {
-              if (doc[0].room.teamvote.length === doc[0].room.maxPlayer) {
+              if (docs[0].room.teamvote.length === docs[0].room.maxPlayer) {
                 this.showTeamVoteResult(doc[0].room.teamvote)
               }
             }
@@ -107,8 +108,8 @@ Page({
       success: res => {
         console.log('[云函数] [startGame]')
         console.log(res.result)
-        const character = result[this.data.playerNumber].name
-        const info = result[this.data.playerNumber].message
+        const character = res.result.roles[this.data.playerNumber].name
+        const info = res.result.roles[this.data.playerNumber].message
         this.setData({
           character: character,
           info: info,
@@ -125,12 +126,31 @@ Page({
     })
   },
 
-  voteTeam: function () {
+  voteTeamApprove: function () {
     console.log(this.data.roomid)
     wx.cloud.callFunction({
       name: 'voteTeam',
       data: {
         roomid: this.data.roomid,
+        vote: 1,
+      },
+      success: res => {
+        console.log('[云函数] [voteTeam]')
+        console.log(res.result)
+      },
+      fail: err => {
+        console.error('[云函数] [voteTeam] 调用失败', err)
+      }
+    })
+  },
+
+  voteTeamReject: function () {
+    console.log(this.data.roomid)
+    wx.cloud.callFunction({
+      name: 'voteTeam',
+      data: {
+        roomid: this.data.roomid,
+        vote: 0,
       },
       success: res => {
         console.log('[云函数] [voteTeam]')

@@ -48,6 +48,7 @@
   height:220rpx;
   background-color:transparent;
   border-color:transparent;
+  text-align: center;
 }
 
 .userinfo-avatar{

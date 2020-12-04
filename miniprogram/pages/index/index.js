@@ -122,7 +122,7 @@ Page({
       data: {creator: {
         nickName: this.data.userInfo.nickName,
         avatarUrl: this.data.userInfo.avatarUrl},
-        maxPlayer: e.detail.value.input},
+        maxPlayer: Number(e.detail.value.input)},
       success: res => {
         console.log('[云函数] [createGame]')
         console.log(res.result)
