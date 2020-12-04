@@ -9,6 +9,9 @@ Page({
     roomid: String,
     canStartGame: false,
     role: String,
+    playerNumber: Number,
+    character: String,
+    info: String
   },
 
   onLoad: function (query) {
@@ -28,16 +31,19 @@ Page({
         _id: this.data.docid
       }).get().then(res => {
         console.log(res)
+        const index = res.data[0].room.players.indexOf(app.globalData.name)
         if (res.data[0].room.curPlayer == 1) {
           this.setData({
             roomid: res.data[0].room.roomid,
             role: "owner",
+            playerNumber: index
           })
         }
         else {
           this.setData({
             roomid: res.data[0].room.roomid,
             role: "player",
+            playerNumber: index
           })
         }
       })
@@ -93,6 +99,17 @@ Page({
       success: res => {
         console.log('[云函数] [startGame]')
         console.log(res.result)
+        const character = result[this.data.playerNumber].name
+        const info = result[this.data.playerNumber].message
+        this.setData({
+          character: character,
+          info: info,
+        })
+        wx.showModal({
+          title: '你的角色是',
+          content: character + '\n' + info,
+          showCancel: false
+        })
       },
       fail: err => {
         console.error('[云函数] [startGame] 调用失败', err)
