@@ -10,7 +10,7 @@ const db = cloud.database()
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
-  const roomid = event.zoomid
+  const roomid = event.roomid
   const _ = db.command
 
   return db.collection('room')
