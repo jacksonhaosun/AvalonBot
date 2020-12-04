@@ -82,6 +82,19 @@ Page({
                 })
               }
             }
+            
+            // watch for game start
+            if (docChanges[0].updatedFields && docChanges[0].updatedFields['room.roles']) {
+              console.log('game started!')
+              var otherString = docs[0].room.roles[this.data.playerNumber].otherUsers.map(index => {
+                return docs[0].room.players[index]
+              }).join(",")
+              this.setData({
+                character: docs[0].room.roles[this.data.playerNumber].name,
+                info: docs[0].room.roles[this.data.playerNumber].message + "\n" + otherString,
+              })
+              this.showCharacterInfo()
+            }
 
             // watch for team vote
             // TODO
@@ -108,21 +121,18 @@ Page({
       success: res => {
         console.log('[云函数] [startGame]')
         console.log(res.result)
-        const character = res.result.roles[this.data.playerNumber].name
-        const info = res.result.roles[this.data.playerNumber].message
-        this.setData({
-          character: character,
-          info: info,
-        })
-        wx.showModal({
-          title: '你的角色是',
-          content: character + '\n' + info,
-          showCancel: false
-        })
       },
       fail: err => {
         console.error('[云函数] [startGame] 调用失败', err)
       }
+    })
+  },
+  
+  showCharacterInfo: function () {
+    wx.showModal({
+      title: '你的角色是',
+      content: this.data.character + '\n' + this.data.info,
+      showCancel: false
     })
   },
 
