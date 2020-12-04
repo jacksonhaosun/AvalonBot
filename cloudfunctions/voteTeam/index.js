@@ -9,9 +9,11 @@ const _ = db.command
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   const { data } = await db.collection('room')
-    .where( { roomid })
+    .where( { 'room.roomid': event.roomid })
     .get()
   let teamvote = data[0].room.teamvote
+
+  // Create a new vote array if it's a new round
   if (teamvote.length == data[0].room.maxPlayer) {
     teamvote = [event.vote]
   }
@@ -28,7 +30,7 @@ exports.main = async (event, context) => {
           }
         }
       })
-      
+
   return {
     event,
     openid: wxContext.OPENID,
