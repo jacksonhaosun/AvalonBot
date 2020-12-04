@@ -7,7 +7,8 @@
   <view class="info-wrap">
     <block wx:for="{{players}}" wx:for-item="item" wx:key="index"> 
       <view class="userinfo">
-      <image class="userinfo-avatar" src="player1.png"></image>
+      <!-- icon -->
+      <image class="userinfo-avatar" src=""></image>
       <text class="userinfo-nickname">Mocca</text>
     </view>
     </block>

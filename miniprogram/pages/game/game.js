@@ -55,27 +55,22 @@ Page({
             console.log('query result snapshot after the event', docs)
 
             // watch for player joining
-            console.log(this.data.players);
-            if (docChanges[0].updatedFields && docChanges[0].updatedFields.room.curPlayer) {
+            if (docChanges[0].updatedFields && docChanges[0].updatedFields['room.curPlayer']) {
+              this.setData({
+                playerAvatars: docs[0].room.playerAvatars,
+                players: docs[0].room.players,
+              })
+              console.log(this.data.players)
               if (docs[0].room.curPlayer === docs[0].room.maxPlayer && this.data.role === 'owner') {
                 this.setData({
                   canStartGame: true,
-                  playerAvatars: docs[0].room.playerAvatars,
-                  players: docs[0].room.players,
-                })
-              }
-              else if (docs[0].room.curPlayer === docs[0].room.maxPlayer) {
-                
-                this.setData({
-                  playerAvatars: docs[0].room.playerAvatars,
-                  players: docs[0].room.players,
                 })
               }
             }
 
             // watch for team vote
             // TODO
-            if (docChanges[0].updatedFields && docChanges[0].updatedFields.room.teamvote) {
+            if (docChanges[0].updatedFields && docChanges[0].updatedFields['room.teamvote']) {
               if (doc[0].room.teamvote.length === doc[0].room.maxPlayer) {
                 this.showTeamVoteResult(doc[0].room.teamvote)
               }
