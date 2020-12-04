@@ -46,6 +46,14 @@ Page({
             playerNumber: index
           })
         }
+        // populate playerAvatars
+        this.setData({
+          playerAvatars:res.data[0].room["playerAvatars"]
+        })
+        // populate players
+        this.setData({
+          players:res.data[0].room["players"]
+        })
       })
 
     // Watcher for player joining game

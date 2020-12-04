@@ -115,14 +115,14 @@ Page({
       }
     })
   },
-  onCreateGame: function() {
+  onCreateGame: function(e) {
     // 调用云函数
     wx.cloud.callFunction({
       name: 'createGame',
       data: {creator: {
         nickName: this.data.userInfo.nickName,
         avatarUrl: this.data.userInfo.avatarUrl},
-        maxPlayer: 8},
+        maxPlayer: e.detail.value.input},
       success: res => {
         console.log('[云函数] [createGame]')
         console.log(res.result)
