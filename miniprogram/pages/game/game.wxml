@@ -1,10 +1,28 @@
-<view class="container">
-  <view>room {{roomid}}</view>
-  <view wx:for="{{players}}" wx:for-item="item" wx:key="index">
-    <button 
-      class="userinfo-avatar"
-      style="background-image: url({{item.avatarUrl}})"
-      size="default"
-    ></button>
-  </view>
+<header><text slot="content" class="header-title">Avalon Board Game</text></header>
+
+<image class='bg' src='background.jpg'/>
+<view class="room">
+  <view class="room-number">Room {{roomid}}</view> 
 </view>
+  <view class="info-wrap">
+    <!-- <block wx:for="{{playerAvatars}}" wx:for-item="item" wx:key="index"> 
+      <view class="userinfo">
+        <image class="userinfo-avatar" src="player1.png"></image>
+        <text class="userinfo-nickname">Mocca</text>
+      </view>
+    </block> -->
+    <view class="userinfo">
+    <view wx:for="{{playerAvatars}}" wx:key="*this">
+      <view 
+        class="userinfo-avatar"
+        style="background-image: url({{item}})"
+        size="default"
+      ></view>
+    </view>
+
+    <view wx:for="{{players}}" wx:key="*this">
+      <text class="userinfo-nickname">{{item}}</text>
+    </view>
+    </view>
+  </view>
+
