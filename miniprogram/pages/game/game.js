@@ -126,6 +126,7 @@ Page({
   },
 
   voteTeam: function () {
+    console.log(this.data.roomid)
     wx.cloud.callFunction({
       name: 'voteTeam',
       data: {

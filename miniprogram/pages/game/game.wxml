@@ -26,3 +26,8 @@
     </view>
   </view>
 
+  <form catchsubmit="voteTeam">
+    <view class="weui-cell weui-cell_input">
+    </view>
+    <button type="default" formType="submit">发车成功</button>
+  </form>
