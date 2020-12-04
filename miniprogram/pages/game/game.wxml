@@ -5,23 +5,24 @@
   <view class="room-number">Room {{roomid}}</view> 
 </view>
   <view class="info-wrap">
-    <block wx:for="{{players}}" wx:for-item="item" wx:key="index"> 
+    <!-- <block wx:for="{{playerAvatars}}" wx:for-item="item" wx:key="index"> 
       <view class="userinfo">
-      <image class="userinfo-avatar" src="player1.png"></image>
-      <text class="userinfo-nickname">Mocca</text>
-    </view>
-    </block>
-    <!-- <view class="userinfo">
-      <image class="userinfo-avatar" src="player1.png"></image>
-      <text class="userinfo-nickname">Mocca</text>
-    </view>
+        <image class="userinfo-avatar" src="player1.png"></image>
+        <text class="userinfo-nickname">Mocca</text>
+      </view>
+    </block> -->
     <view class="userinfo">
-      <image class="userinfo-avatar" src="player1.png"></image>
-      <text class="userinfo-nickname">Mocca</text>
+    <view wx:for="{{playerAvatars}}">
+      <view 
+        class="userinfo-avatar"
+        style="background-image: url({{item}})"
+        size="default"
+      ></view>
     </view>
-    <view class="userinfo">
-      <image class="userinfo-avatar" src="player1.png"></image>
-      <text class="userinfo-nickname">Mocca</text>
-    </view>  -->
+
+    <view wx:for="{{players}}">
+      <text class="userinfo-nickname">{{item}}</text>
+    </view>
+    </view>
   </view>
 
