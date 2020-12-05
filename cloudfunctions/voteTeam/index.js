@@ -1,7 +1,10 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
-cloud.init()
+cloud.init({
+  // API 调用都保持和云函数当前所在环境一致
+  env: cloud.DYNAMIC_CURRENT_ENV
+})
 
 const db = cloud.database()
 const _ = db.command
@@ -9,9 +12,11 @@ const _ = db.command
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   const { data } = await db.collection('room')
-    .where( { roomid })
+    .where( { 'room.roomid': event.roomid })
     .get()
-  let teamvote = data[0].room.teamvote
+  let teamvote = data[0].room.teamvote === undefined ? [] : data[0].room.teamvote
+
+  // Create a new vote array if it's a new round
   if (teamvote.length == data[0].room.maxPlayer) {
     teamvote = [event.vote]
   }
@@ -28,7 +33,7 @@ exports.main = async (event, context) => {
           }
         }
       })
-      
+
   return {
     event,
     openid: wxContext.OPENID,

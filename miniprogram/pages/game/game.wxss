@@ -23,7 +23,6 @@
   font-weight: 700;
   color: rgba(51, 51, 51, 1);
   letter-spacing: 8rpx;
-  /* background: rgba(141, 216, 255, 1); */
   border-radius: 12rpx;
   width: 400rpx;
   height: 40rpx;
@@ -36,6 +35,7 @@
   flex-flow: row wrap;
   align-content: flex-start;
   overflow: hidden;
+  align-items: center;
 }
 
 .userinfo{
@@ -44,10 +44,11 @@
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  width: 50%;
+  width: 25%;
   height:220rpx;
   background-color:transparent;
   border-color:transparent;
+  text-align: center;
 }
 
 .userinfo-avatar{

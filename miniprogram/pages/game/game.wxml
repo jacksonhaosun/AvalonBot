@@ -4,25 +4,29 @@
 <view class="room">
   <view class="room-number">Room {{roomid}}</view> 
 </view>
-  <view class="info-wrap">
-    <block wx:for="{{players}}" wx:for-item="item" wx:key="index"> 
+  <view class="info-wrap">   
+    <block wx:for="{{playerAvatars}}" wx:key="index">
       <view class="userinfo">
-      <!-- icon -->
-      <image class="userinfo-avatar" src=""></image>
-      <text class="userinfo-nickname">Mocca</text>
-    </view>
+        <image class="userinfo-avatar" src="{{item}}"></image>
+        <text class="userinfo-nickname">{{players[index]}}</text>
+      </view>
     </block>
-    <!-- <view class="userinfo">
-      <image class="userinfo-avatar" src="player1.png"></image>
-      <text class="userinfo-nickname">Mocca</text>
-    </view>
-    <view class="userinfo">
-      <image class="userinfo-avatar" src="player1.png"></image>
-      <text class="userinfo-nickname">Mocca</text>
-    </view>
-    <view class="userinfo">
-      <image class="userinfo-avatar" src="player1.png"></image>
-      <text class="userinfo-nickname">Mocca</text>
-    </view>  -->
   </view>
 
+  <form catchsubmit="startGame">
+    <view class="weui-cell weui-cell_input">
+    </view>
+    <button type="default" formType="submit">开始游戏</button>
+  </form>
+
+  <form catchsubmit="voteTeamApprove">
+    <view class="weui-cell weui-cell_input">
+    </view>
+    <button type="default" formType="submit">同意发车</button>
+  </form>
+
+  <form catchsubmit="voteTeamReject">
+    <view class="weui-cell weui-cell_input">
+    </view>
+    <button type="default" formType="submit">反对发车</button>
+  </form>
