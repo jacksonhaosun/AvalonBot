@@ -11,7 +11,8 @@ Page({
     role: String,
     playerNumber: Number,
     character: String,
-    info: String
+    info: String,
+    questResult: [],
   },
 
   onLoad: function (query) {
@@ -97,10 +98,23 @@ Page({
             }
 
             // watch for team vote
-            // TODO
             if (docChanges[0].updatedFields && docChanges[0].updatedFields['room.teamvote']) {
               if (docs[0].room.teamvote.length === docs[0].room.maxPlayer) {
                 this.showTeamVoteResult(doc[0].room.teamvote)
+              }
+            } 
+
+            // watch for quest result
+            if (docChanges[0].updatedFields && docChanges[0].updatedFields['room.questvote']) {
+              const questNumber = docs[0].room.questNumber;
+              const questArray = docs[0].room.questArray;
+              if (docs[0].room.questvote.length == questArray[questNumber]) {
+                const requireTwoFail = docs[0].room.maxPlayer >= 7 && docs[0].room.questNumber == 3
+                this.showQuestResult(docs[0].room.questvote, requireTwoFail)
+                // go to next quest, done by owner
+                if(this.data.role === 'owner') {
+                  this.updateQuestNumber()
+                }
               }
             }
           }
@@ -181,6 +195,38 @@ Page({
       title: title,
       content: content,
       showCancel: false
+    })
+  },
+
+  showQuestResult: function(questvote, requireTwoFail) {
+    let success = 0
+    questvote.forEach(vote => success += vote)
+    let title = requireTwoFail ? (success >= questvote.length-1 ? '任务成功' : '任务失败') : (success = questvote.length ? '任务成功' : '任务失败')
+
+    const questResult = this.data.questResult
+    questResult.push(title)
+    this.setData({
+      questResult: questResult
+    })
+    wx.showModal({
+      title: title,
+      showCancel: false
+    })
+  },
+
+  updateQuestNumber: function () {
+    wx.cloud.callFunction({
+      name: 'updateQuestNumber',
+      data: {
+        roomid: this.data.roomid
+      },
+      success: res => {
+        console.log('[云函数] [updateQuestNumber]')
+        console.log(res.result)
+      },
+      fail: err => {
+        console.error('[云函数] [updateQuestNumber] 调用失败', err)
+      }
     })
   },
 })
