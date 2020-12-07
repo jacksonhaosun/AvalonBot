@@ -100,7 +100,7 @@ Page({
             // watch for team vote
             if (docChanges[0].updatedFields && docChanges[0].updatedFields['room.teamvote']) {
               if (docs[0].room.teamvote.length === docs[0].room.maxPlayer) {
-                this.showTeamVoteResult(doc[0].room.teamvote)
+                this.showTeamVoteResult(docs[0].room.teamvote)
               }
             } 
 
@@ -189,8 +189,8 @@ Page({
   showTeamVoteResult: function(votes) {
     let approve = 0
     votes.forEach(vote => approve += vote)
-    let title = success > votes.length/2 ? '发车成功' : '发车失败'
-    let content = 'Approve: ' + approve + '\nReject: ' + votes.length - approve
+    let title = approve > votes.length/2 ? '发车成功' : '发车失败'
+    let content = 'Approve: ' + approve + '\nReject: ' + (votes.length - approve)
     wx.showModal({
       title: title,
       content: content,
