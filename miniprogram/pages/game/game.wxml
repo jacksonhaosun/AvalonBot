@@ -4,24 +4,13 @@
 <view class="room">
   <view class="room-number">Room {{roomid}}</view> 
 </view>
-  <view class="info-wrap">
-    <!-- <block wx:for="{{playerAvatars}}" wx:for-item="item" wx:key="index"> 
+  <view class="info-wrap">   
+    <block wx:for="{{playerAvatars}}" wx:key="index">
       <view class="userinfo">
-        <image class="userinfo-avatar" src="player1.png"></image>
-        <text class="userinfo-nickname">Mocca</text>
+        <image class="userinfo-avatar" src="{{item}}"></image>
+        <text class="userinfo-nickname">{{players[index]}}</text>
       </view>
-    </block> -->
-    <view class="userinfo">
-    <view wx:for="{{playerAvatars}}" wx:key="index">
-      <view 
-        class="userinfo-avatar"
-        style="background-image: url({{item}})"
-        size="default"
-      ></view>
-      <text class="userinfo-nickname">{{players[index]}}</text>
-    </view>
-
-    </view>
+    </block>
   </view>
 
   <form catchsubmit="startGame">
