@@ -60,3 +60,7 @@
   color: black;
   background-color:transparent;
 }
+
+form{
+  padding: 5px;
+}

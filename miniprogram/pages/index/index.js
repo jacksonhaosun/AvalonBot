@@ -60,7 +60,7 @@ Page({
       success: res => {
         console.log('[云函数] [createGame]')
         console.log(res.result)
-        if ((typeof res.result) === "string") {
+        if (res.result === "房间人数为5-10人") {
           wx.showToast({
             title: res.result,
             icon: 'none',

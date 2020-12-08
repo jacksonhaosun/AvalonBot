@@ -180,12 +180,13 @@ function generateGameType(n) {
 }
 
 function generateQuestArray(numPlayer) {
-  switch(numPlayer) {
-    case 5: return [2,3,2,3,3]
-    case 6: return [2,3,4,3,4]
-    case 7: return [2,3,3,4,4]
-    default: return [3,4,4,5,5]
-  }
+  if (numPlayer == 5) 
+    return [2,3,2,3,3]
+  if (numPlayer == 6)
+    return [2,3,4,3,4]
+  if (numPlayer == 7)
+    return [2,3,3,4,4]
+  return [3,4,4,5,5]
 }
 const db = cloud.database()
 // 云函数入口函数
@@ -197,7 +198,7 @@ exports.main = async (event, context) => {
 
   const gametype = generateGameType(data[0].room.maxPlayer)
   const roles = generateRoles(gametype)
-  const questArray = generateQuestArray(data[0].maxPlayer)
+  const questArray = generateQuestArray(data[0].room.maxPlayer)
   db.collection('room').where({
     'room.roomid': event.roomid
   }).update({

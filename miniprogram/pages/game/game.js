@@ -15,6 +15,7 @@ Page({
     questResult: [],
     startGameClicked: false,
     voteTeamClicked: false,
+    voteQuestClicked: false,
   },
 
   onLoad: function (query) {
@@ -40,7 +41,8 @@ Page({
           this.setData({
             roomid: res.data[0].room.roomid,
             role: "owner",
-            playerNumber: index
+            playerNumber: index,
+            canStartGame: true,
           })
         }
         else {
@@ -110,7 +112,9 @@ Page({
             if (docChanges[0].updatedFields && docChanges[0].updatedFields['room.questvote']) {
               const questNumber = docs[0].room.questNumber;
               const questArray = docs[0].room.questArray;
-              if (docs[0].room.questvote.length == questArray[questNumber]) {
+              console.log(questNumber)
+              console.log(questArray)
+              if (docs[0].room.questvote.length === questArray[questNumber]) {
                 const requireTwoFail = docs[0].room.maxPlayer >= 7 && docs[0].room.questNumber == 3
                 this.showQuestResult(docs[0].room.questvote, requireTwoFail)
                 // go to next quest, done by owner
@@ -225,9 +229,15 @@ Page({
       title: title,
       showCancel: false
     })
+    this.setData({
+      voteQuestClicked : false,
+    })
   },
 
   voteQuestSuccess: function() {
+    this.setData({
+      voteQuestClicked: true
+    })
     wx.cloud.callFunction({
       name: 'voteQuest',
       data: {
@@ -245,6 +255,9 @@ Page({
   },
 
   voteQuestFail: function() {
+    this.setData({
+      voteQuestClicked: true
+    })
     wx.cloud.callFunction({
       name: 'voteQuest',
       data: {
