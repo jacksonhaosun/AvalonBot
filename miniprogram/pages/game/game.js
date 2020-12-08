@@ -145,7 +145,7 @@ Page({
   showCharacterInfo: function () {
     wx.showModal({
       title: '你的角色是',
-      content: this.data.character + '\n' + this.data.info,
+      content: this.data.character + ' ' + this.data.info,
       showCancel: false
     })
   },
@@ -190,7 +190,7 @@ Page({
     let approve = 0
     votes.forEach(vote => approve += vote)
     let title = approve > votes.length/2 ? '发车成功' : '发车失败'
-    let content = 'Approve: ' + approve + '\nReject: ' + (votes.length - approve)
+    let content = 'Approve: ' + approve + ' Reject: ' + (votes.length - approve)
     wx.showModal({
       title: title,
       content: content,

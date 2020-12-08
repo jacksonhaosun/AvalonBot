@@ -13,7 +13,7 @@
 
   </view>
 
-  <form catchsubmit="onCreateGame">
+  <form catchsubmit="onCreateGame" wx:if="{{logged}}">
     <view class="weui-cell weui-cell_input">
       <view class="weui-cell__bd" style="margin: 30rpx 0" >
         <input class="weui-input" name="input" placeholder="输入房间人数" class="center" input-class="center"/>
@@ -22,12 +22,12 @@
     <button type="default" formType="submit">创建房间</button>
   </form>
 
-  <form catchsubmit="onJoinGame">
+  <form catchsubmit="onJoinGame" wx:if="{{logged}}">
     <view class="weui-cell weui-cell_input">
       <view class="weui-cell__bd" style="margin: 30rpx 0" >
         <input class="weui-input" name="input" placeholder="输入房间号" class="center" placeholder-class="center"/>
       </view>
     </view>
     <button type="default" formType="submit">加入房间</button>
-  </form>
+    </form>
 </view>
