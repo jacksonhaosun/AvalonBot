@@ -13,6 +13,8 @@ Page({
     character: String,
     info: String,
     questResult: [],
+    startGameClicked: false,
+    voteTeamClicked: false,
   },
 
   onLoad: function (query) {
@@ -127,6 +129,9 @@ Page({
   },
 
   startGame: function () {
+    this.setData({
+      startGameClicked: true
+    })
     wx.cloud.callFunction({
       name: 'startGame',
       data: {
@@ -152,6 +157,9 @@ Page({
 
   voteTeamApprove: function () {
     console.log(this.data.roomid)
+    this.setData({
+      voteTeamClicked: true
+    })
     wx.cloud.callFunction({
       name: 'voteTeam',
       data: {
@@ -170,6 +178,9 @@ Page({
 
   voteTeamReject: function () {
     console.log(this.data.roomid)
+    this.setData({
+      voteTeamClicked: true
+    })
     wx.cloud.callFunction({
       name: 'voteTeam',
       data: {
@@ -195,6 +206,9 @@ Page({
       title: title,
       content: content,
       showCancel: false
+    })
+    this.setData({
+      voteTeamClicked : false,
     })
   },
 
