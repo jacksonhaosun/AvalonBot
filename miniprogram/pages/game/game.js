@@ -13,6 +13,8 @@ Page({
     character: String,
     info: String,
     questResult: [],
+    startGameClicked: false,
+    voteTeamClicked: false,
   },
 
   onLoad: function (query) {
@@ -127,6 +129,9 @@ Page({
   },
 
   startGame: function () {
+    this.setData({
+      startGameClicked: true
+    })
     wx.cloud.callFunction({
       name: 'startGame',
       data: {
@@ -152,6 +157,9 @@ Page({
 
   voteTeamApprove: function () {
     console.log(this.data.roomid)
+    this.setData({
+      voteTeamClicked: true
+    })
     wx.cloud.callFunction({
       name: 'voteTeam',
       data: {
@@ -170,6 +178,9 @@ Page({
 
   voteTeamReject: function () {
     console.log(this.data.roomid)
+    this.setData({
+      voteTeamClicked: true
+    })
     wx.cloud.callFunction({
       name: 'voteTeam',
       data: {
@@ -196,13 +207,15 @@ Page({
       content: content,
       showCancel: false
     })
+    this.setData({
+      voteTeamClicked : false,
+    })
   },
 
   showQuestResult: function(questvote, requireTwoFail) {
     let success = 0
     questvote.forEach(vote => success += vote)
-    let title = requireTwoFail ? (success >= questvote.length-1 ? '任务成功' : '任务失败') : (success = questvote.length ? '任务成功' : '任务失败')
-
+    let title = requireTwoFail ? (success >= questvote.length-1 ? '任务成功' : '任务失败') : (success === questvote.length ? '任务成功' : '任务失败')
     const questResult = this.data.questResult
     questResult.push(title)
     this.setData({
@@ -247,7 +260,7 @@ Page({
       }
     })
   },
-
+  
   updateQuestNumber: function () {
     wx.cloud.callFunction({
       name: 'updateQuestNumber',
