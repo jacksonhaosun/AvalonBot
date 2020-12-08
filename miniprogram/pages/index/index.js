@@ -60,9 +60,17 @@ Page({
       success: res => {
         console.log('[云函数] [createGame]')
         console.log(res.result)
-        wx.redirectTo({
-          url: '../game/game?id=' + res.result,
-        })
+        if ((typeof res.result) === "string") {
+          wx.showToast({
+            title: res.result,
+            icon: 'none',
+            duration: 2000
+          })
+        } else {
+          wx.redirectTo({
+            url: '../game/game?id=' + res.result,
+          })
+        }
       },
       fail: err => {
         console.error('[云函数] [createGame] 调用失败', err)

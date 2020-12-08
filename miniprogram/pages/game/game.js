@@ -214,6 +214,40 @@ Page({
     })
   },
 
+  voteQuestSuccess: function() {
+    wx.cloud.callFunction({
+      name: 'voteQuest',
+      data: {
+        roomid: this.data.roomid,
+        vote: 1,
+      },
+      success: res => {
+        console.log('[云函数] [voteQuest]')
+        console.log(res.result)
+      },
+      fail: err => {
+        console.error('[云函数] [voteQuest] 调用失败', err)
+      }
+    })
+  },
+
+  voteQuestFail: function() {
+    wx.cloud.callFunction({
+      name: 'voteQuest',
+      data: {
+        roomid: this.data.roomid,
+        vote: 0,
+      },
+      success: res => {
+        console.log('[云函数] [voteQuest]')
+        console.log(res.result)
+      },
+      fail: err => {
+        console.error('[云函数] [voteQuest] 调用失败', err)
+      }
+    })
+  },
+
   updateQuestNumber: function () {
     wx.cloud.callFunction({
       name: 'updateQuestNumber',
