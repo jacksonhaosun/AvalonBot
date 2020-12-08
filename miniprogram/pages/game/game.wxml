@@ -1,10 +1,32 @@
-<view class="container">
-  <view>room {{roomid}}</view>
-  <view wx:for="{{players}}" wx:for-item="item" wx:key="index">
-    <button 
-      class="userinfo-avatar"
-      style="background-image: url({{item.avatarUrl}})"
-      size="default"
-    ></button>
-  </view>
+<header><text slot="content" class="header-title">Avalon Board Game</text></header>
+
+<image class='bg' src='background.jpg'/>
+<view class="room">
+  <view class="room-number">Room {{roomid}}</view> 
 </view>
+  <view class="info-wrap">   
+    <block wx:for="{{playerAvatars}}" wx:key="index">
+      <view class="userinfo">
+        <image class="userinfo-avatar" src="{{item}}"></image>
+        <text class="userinfo-nickname">{{players[index]}}</text>
+      </view>
+    </block>
+  </view>
+
+  <form catchsubmit="startGame" wx:if="{{!startGameClicked}}">
+    <view class="weui-cell weui-cell_input">
+    </view>
+    <button type="default" formType="submit">开始游戏</button>
+  </form>
+
+  <form catchsubmit="voteTeamApprove">
+    <view class="weui-cell weui-cell_input">
+    </view>
+    <button type="default" formType="submit" disabled="{{voteTeamClicked}}">同意发车</button>
+  </form>
+
+  <form catchsubmit="voteTeamReject">
+    <view class="weui-cell weui-cell_input">
+    </view>
+    <button type="default" formType="submit" disabled="{{voteTeamClicked}}">反对发车</button>
+  </form>

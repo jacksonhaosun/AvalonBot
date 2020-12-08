@@ -1,0 +1,62 @@
+.header-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: rgba(51, 51, 51, 1);
+  letter-spacing: 8rpx;
+  margin-left: 32rpx;
+}
+
+.bg {
+  position: absolute;
+  width: 750rpx;
+  height: 1341rpx;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}
+
+
+.room-number{
+  margin-top: 50rpx;
+  text-align:center;
+  font-size: 34rpx;
+  font-weight: 700;
+  color: rgba(51, 51, 51, 1);
+  letter-spacing: 8rpx;
+  border-radius: 12rpx;
+  width: 400rpx;
+  height: 40rpx;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.info-wrap{
+  display: flex;
+  flex-flow: row wrap;
+  align-content: flex-start;
+  overflow: hidden;
+  align-items: center;
+}
+
+.userinfo{
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 25%;
+  height:220rpx;
+  background-color:transparent;
+  border-color:transparent;
+  text-align: center;
+}
+
+.userinfo-avatar{
+  width:128rpx;
+  height:128rpx;
+}
+
+.userinfo-nickname{
+  color: black;
+  background-color:transparent;
+}
