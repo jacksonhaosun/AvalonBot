@@ -215,8 +215,7 @@ Page({
   showQuestResult: function(questvote, requireTwoFail) {
     let success = 0
     questvote.forEach(vote => success += vote)
-    let title = requireTwoFail ? (success >= questvote.length-1 ? '任务成功' : '任务失败') : (success = questvote.length ? '任务成功' : '任务失败')
-
+    let title = requireTwoFail ? (success >= questvote.length-1 ? '任务成功' : '任务失败') : (success === questvote.length ? '任务成功' : '任务失败')
     const questResult = this.data.questResult
     questResult.push(title)
     this.setData({
@@ -261,7 +260,7 @@ Page({
       }
     })
   },
-
+  
   updateQuestNumber: function () {
     wx.cloud.callFunction({
       name: 'updateQuestNumber',
