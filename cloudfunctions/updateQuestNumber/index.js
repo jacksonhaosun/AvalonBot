@@ -16,7 +16,8 @@ exports.main = async (event, context) => {
   }).update({
     data: {
       room: {
-        questNumber: _inc(1)
+        questNumber: _.inc(1),
+        questvote: []
       }
     }
   })

@@ -15,6 +15,7 @@ Page({
     questResult: [],
     startGameClicked: false,
     voteTeamClicked: false,
+    voteQuestClicked: false,
   },
 
   onLoad: function (query) {
@@ -40,7 +41,8 @@ Page({
           this.setData({
             roomid: res.data[0].room.roomid,
             role: "owner",
-            playerNumber: index
+            playerNumber: index,
+            canStartGame: true,
           })
         }
         else {
@@ -110,7 +112,9 @@ Page({
             if (docChanges[0].updatedFields && docChanges[0].updatedFields['room.questvote']) {
               const questNumber = docs[0].room.questNumber;
               const questArray = docs[0].room.questArray;
-              if (docs[0].room.questvote.length == questArray[questNumber]) {
+              console.log(questNumber)
+              console.log(questArray)
+              if (docs[0].room.questvote.length === questArray[questNumber]) {
                 const requireTwoFail = docs[0].room.maxPlayer >= 7 && docs[0].room.questNumber == 3
                 this.showQuestResult(docs[0].room.questvote, requireTwoFail)
                 // go to next quest, done by owner
@@ -215,8 +219,7 @@ Page({
   showQuestResult: function(questvote, requireTwoFail) {
     let success = 0
     questvote.forEach(vote => success += vote)
-    let title = requireTwoFail ? (success >= questvote.length-1 ? '任务成功' : '任务失败') : (success = questvote.length ? '任务成功' : '任务失败')
-
+    let title = requireTwoFail ? (success >= questvote.length-1 ? '任务成功' : '任务失败') : (success === questvote.length ? '任务成功' : '任务失败')
     const questResult = this.data.questResult
     questResult.push(title)
     this.setData({
@@ -226,8 +229,51 @@ Page({
       title: title,
       showCancel: false
     })
+    this.setData({
+      voteQuestClicked : false,
+    })
   },
 
+  voteQuestSuccess: function() {
+    this.setData({
+      voteQuestClicked: true
+    })
+    wx.cloud.callFunction({
+      name: 'voteQuest',
+      data: {
+        roomid: this.data.roomid,
+        vote: 1,
+      },
+      success: res => {
+        console.log('[云函数] [voteQuest]')
+        console.log(res.result)
+      },
+      fail: err => {
+        console.error('[云函数] [voteQuest] 调用失败', err)
+      }
+    })
+  },
+
+  voteQuestFail: function() {
+    this.setData({
+      voteQuestClicked: true
+    })
+    wx.cloud.callFunction({
+      name: 'voteQuest',
+      data: {
+        roomid: this.data.roomid,
+        vote: 0,
+      },
+      success: res => {
+        console.log('[云函数] [voteQuest]')
+        console.log(res.result)
+      },
+      fail: err => {
+        console.error('[云函数] [voteQuest] 调用失败', err)
+      }
+    })
+  },
+  
   updateQuestNumber: function () {
     wx.cloud.callFunction({
       name: 'updateQuestNumber',

@@ -13,7 +13,7 @@
     </block>
   </view>
 
-  <form catchsubmit="startGame" wx:if="{{!startGameClicked}}">
+  <form catchsubmit="startGame" wx:if="{{canStartGame && !startGameClicked}}">
     <view class="weui-cell weui-cell_input">
     </view>
     <button type="default" formType="submit">开始游戏</button>
@@ -29,4 +29,16 @@
     <view class="weui-cell weui-cell_input">
     </view>
     <button type="default" formType="submit" disabled="{{voteTeamClicked}}">反对发车</button>
+  </form>
+
+  <form catchsubmit="voteQuestSuccess">
+    <view class="weui-cell weui-cell_input">
+    </view>
+    <button type="default" formType="submit" disabled="{{voteQuestClicked}}">任务成功</button>
+  </form>
+
+  <form catchsubmit="voteQuestFail">
+    <view class="weui-cell weui-cell_input">
+    </view>
+    <button type="default" formType="submit" disabled="{{voteQuestClicked}}">任务失败</button>
   </form>

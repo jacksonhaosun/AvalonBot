@@ -39,5 +39,9 @@ async function createNewGame(maxPlayer, creator) {
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
-  return createNewGame(event.maxPlayer, event.creator)
+  if (event.maxPlayer < 5 || event.maxPlayer > 10) {
+    return "房间人数为5-10人"
+  } else {
+    return createNewGame(event.maxPlayer, event.creator)
+  }
 }
