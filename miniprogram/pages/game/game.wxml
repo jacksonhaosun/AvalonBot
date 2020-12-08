@@ -30,3 +30,15 @@
     </view>
     <button type="default" formType="submit" disabled="{{voteTeamClicked}}">反对发车</button>
   </form>
+
+  <form catchsubmit="voteQuestSuccess">
+    <view class="weui-cell weui-cell_input">
+    </view>
+    <button type="default" formType="submit">任务成功</button>
+  </form>
+
+  <form catchsubmit="voteQuestFail">
+    <view class="weui-cell weui-cell_input">
+    </view>
+    <button type="default" formType="submit">任务失败</button>
+  </form>
