@@ -27,7 +27,7 @@ exports.main = async (event, context) => {
       .update({
         data: {
           room: {
-            players: _.push(event.player.nickName),
+            players: _.push(event.player.nickName.substring(0,5)),
             playerAvatars: _.push(event.player.avatarUrl),
             curPlayer: _.inc(1)
           }

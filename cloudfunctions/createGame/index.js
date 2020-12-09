@@ -25,7 +25,7 @@ async function createNewGame(maxPlayer, creator) {
     maxPlayer: maxPlayer,
     curPlayer: 1,
     createTimestamp: Date.now().toString(),
-    players: [creator.nickName],
+    players: [creator.nickName.substring(0,5)],
     playerAvatars: [creator.avatarUrl]
   }
   return db.collection('room').add({
