@@ -12,6 +12,8 @@ Page({
     playerNumber: Number,
     character: String,
     info: String,
+    questNumber: Number,
+    questInfo: String,
     questResult: [],
     startGameClicked: false,
     voteTeamClicked: false,
@@ -97,8 +99,20 @@ Page({
               this.setData({
                 character: docs[0].room.roles[this.data.playerNumber].name,
                 info: docs[0].room.roles[this.data.playerNumber].message + "\n" + otherString,
+                questArray: docs[0].room.questArray,
               })
               this.showCharacterInfo()
+              let content = "";
+              this.data.questArray.forEach((num, index) => {
+                if (index == 3 && this.data.players.length >= 7) {
+                  content += num.toString()+"* "
+                } else {
+                  content += num.toString() + " "
+                }
+              })
+              this.setData({
+                questInfo: content
+              })
             }
 
             // watch for team vote
@@ -220,6 +234,7 @@ Page({
     let success = 0
     questvote.forEach(vote => success += vote)
     let title = requireTwoFail ? (success >= questvote.length-1 ? '任务成功' : '任务失败') : (success === questvote.length ? '任务成功' : '任务失败')
+    let content = 'Success: ' + success + ' Fail: ' + (questvote.length - success)
     const questResult = this.data.questResult
     questResult.push(title)
     this.setData({
@@ -227,6 +242,7 @@ Page({
     })
     wx.showModal({
       title: title,
+      content: content,
       showCancel: false
     })
     this.setData({
@@ -289,4 +305,5 @@ Page({
       }
     })
   },
+
 })

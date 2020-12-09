@@ -2,7 +2,7 @@
 <view class="container">
 
   <!-- 用户 openid -->
-  <view class="userinfo">
+  <view class="init-page">
     <button 
       open-type="getUserInfo" 
       bindgetuserinfo="onGetUserInfo"
@@ -19,15 +19,15 @@
         <input class="weui-input" name="input" placeholder="输入房间人数" class="center" input-class="center"/>
       </view>
     </view>
-    <button type="default" formType="submit">创建房间</button>
+    <button type="default" class="button-style" formType="submit">创建房间</button>
   </form>
 
-  <form catchsubmit="onJoinGame" wx:if="{{logged}}">
+  <form class="join-game"catchsubmit="onJoinGame" wx:if="{{logged}}">
     <view class="weui-cell weui-cell_input">
       <view class="weui-cell__bd" style="margin: 30rpx 0" >
         <input class="weui-input" name="input" placeholder="输入房间号" class="center" placeholder-class="center"/>
       </view>
     </view>
-    <button type="default" formType="submit">加入房间</button>
+    <button type="default" class="button-style" formType="submit">加入房间</button>
     </form>
 </view>

@@ -1,18 +1,19 @@
 .header-title {
   font-size: 34rpx;
   font-weight: 700;
-  color: rgba(51, 51, 51, 1);
+  color:white;
   letter-spacing: 8rpx;
   margin-left: 32rpx;
 }
 
 .bg {
   position: absolute;
-  width: 750rpx;
-  height: 1341rpx;
+  width: 100%;
+  height: 100%;
   left: 0;
   top: 0;
   z-index: -1;
+  background-size: cover;
 }
 
 
@@ -21,7 +22,7 @@
   text-align:center;
   font-size: 34rpx;
   font-weight: 700;
-  color: rgba(51, 51, 51, 1);
+  color:white;
   letter-spacing: 8rpx;
   border-radius: 12rpx;
   width: 400rpx;
@@ -30,6 +31,15 @@
   margin-right: auto;
 }
 
+.quest-info{
+  text-align: center;
+  font-size: 34rpx;
+  position: fixed;
+  bottom: 30rpx;
+  color: white;
+  left: 0;
+  right: 0;
+}
 .info-wrap{
   display: flex;
   flex-flow: row wrap;
@@ -57,10 +67,14 @@
 }
 
 .userinfo-nickname{
-  color: black;
+  color: white;
   background-color:transparent;
 }
 
 form{
   padding: 5px;
+}
+
+.button-style{
+  color: #362407 !important;
 }

@@ -1,44 +1,47 @@
-<header><text slot="content" class="header-title">Avalon Board Game</text></header>
+<!-- <header><text slot="content" class="header-title">Avalon Board Game</text></header> -->
 
 <image class='bg' src='background.jpg'/>
 <view class="room">
   <view class="room-number">Room {{roomid}}</view> 
 </view>
-  <view class="info-wrap">   
-    <block wx:for="{{playerAvatars}}" wx:key="index">
-      <view class="userinfo">
-        <image class="userinfo-avatar" src="{{item}}"></image>
-        <text class="userinfo-nickname">{{players[index]}}</text>
-      </view>
-    </block>
-  </view>
+
+<view class="info-wrap">   
+  <block wx:for="{{playerAvatars}}" wx:key="index">
+    <view class="userinfo">
+      <image class="userinfo-avatar" src="{{item}}"></image>
+      <text class="userinfo-nickname">{{players[index]}}</text>
+    </view>
+  </block>
+</view>
 
   <form catchsubmit="startGame" wx:if="{{canStartGame && !startGameClicked}}">
     <view class="weui-cell weui-cell_input">
     </view>
-    <button type="default" formType="submit">开始游戏</button>
+    <button type="default" class="button-style" formType="submit">开始游戏</button>
   </form>
 
   <form catchsubmit="voteTeamApprove">
     <view class="weui-cell weui-cell_input">
     </view>
-    <button type="default" formType="submit" disabled="{{voteTeamClicked}}">同意发车</button>
+    <button type="default" class="button-style" formType="submit" disabled="{{voteTeamClicked}}">同意发车</button>
   </form>
 
   <form catchsubmit="voteTeamReject">
     <view class="weui-cell weui-cell_input">
     </view>
-    <button type="default" formType="submit" disabled="{{voteTeamClicked}}">反对发车</button>
+    <button type="default" class="button-style" formType="submit" disabled="{{voteTeamClicked}}">反对发车</button>
   </form>
 
   <form catchsubmit="voteQuestSuccess">
     <view class="weui-cell weui-cell_input">
     </view>
-    <button type="default" formType="submit" disabled="{{voteQuestClicked}}">任务成功</button>
+    <button type="default" class="button-style" formType="submit" disabled="{{voteQuestClicked}}">任务成功</button>
   </form>
 
   <form catchsubmit="voteQuestFail">
     <view class="weui-cell weui-cell_input">
     </view>
-    <button type="default" formType="submit" disabled="{{voteQuestClicked}}">任务失败</button>
+    <button type="default" class="button-style" formType="submit" disabled="{{voteQuestClicked}}">任务失败</button>
   </form>
+
+  <view class="quest-info">{{questInfo}}</view>

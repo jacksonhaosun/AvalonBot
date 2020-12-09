@@ -155,3 +155,16 @@ page {
 .center{
   text-align: center;
 }
+
+.button-style{
+  color: #362407 !important;
+}
+
+.init-page{
+  padding-top: 3cm;
+}
+
+.join-game{
+  padding-top: 0.5cm;
+}
+
