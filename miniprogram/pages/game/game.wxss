@@ -31,6 +31,15 @@
   margin-right: auto;
 }
 
+.quest-info{
+  text-align: center;
+  font-size: 34rpx;
+  position: fixed;
+  bottom: 30rpx;
+  color: white;
+  left: 0;
+  right: 0;
+}
 .info-wrap{
   display: flex;
   flex-flow: row wrap;
