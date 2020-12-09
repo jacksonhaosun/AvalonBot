@@ -37,6 +37,8 @@
   position: fixed;
   bottom: 30rpx;
   color: white;
+  left: 0;
+  right: 0;
 }
 .info-wrap{
   display: flex;
